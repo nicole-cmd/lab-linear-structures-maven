@@ -19,9 +19,27 @@ public class StringUtils {
   /**
    * Determine whether the parens match in string.
    */
-  public static boolean checkMatching(String str) {
+  public static boolean checkMatching(String str) throws Exception{
     Stack<Character> parens = new LinkedStack<Character>();
-    return false;       // STUB
+    
+    for(int i=0; i<str.length(); i++){
+      if(str.charAt(i) == '(' || str.charAt(i) == '['){
+        parens.push(str.charAt(i));
+      } else if(str.charAt(i) == ')' || str.charAt(i) == ']'){
+        if(parens.isEmpty() == false){
+          char check = parens.pop();
+          if(check == '(' && str.charAt(i)!= ')'){
+            return false;
+          } else if(check == '[' && str.charAt(i)!= ']'){
+            return false;
+          }
+        }
+        else{
+          return false;
+        }
+      }
+    }
+    return parens.isEmpty();
   } // checkMatching
 } // class StringUtils    
 
