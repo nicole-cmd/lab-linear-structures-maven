@@ -9,7 +9,8 @@ import java.io.PrintWriter;
  * Assorted utilities for working with strings.
  * 
  * @author Samuel A. Rebelsky
- * @author Your Name Here
+ * @author Alyssa Ryan
+ * @author Nicole Gorrell
  */ 
 public class StringUtils {
   // +------------------+--------------------------------------------
@@ -20,21 +21,36 @@ public class StringUtils {
    * Determine whether the parens match in string.
    */
   public static boolean checkMatching(String str) throws Exception{
-    Stack<Character> parens = new LinkedStack<Character>();
+    Stack<Pair> parens = new LinkedStack<Pair>();
+    PrintWriter error = new PrintWriter(System.err, true);
+    Pair check = null;
     
     for(int i=0; i<str.length(); i++){
       if(str.charAt(i) == '(' || str.charAt(i) == '['){
-        parens.push(str.charAt(i));
+        Pair temp = new Pair(i, str.charAt(i));
+        parens.push(temp);
       } else if(str.charAt(i) == ')' || str.charAt(i) == ']'){
         if(parens.isEmpty() == false){
-          char check = parens.pop();
-          if(check == '(' && str.charAt(i)!= ')'){
+          check = parens.pop();
+          
+          if(check.val == '(' && str.charAt(i)!= ')'){
+            error.printf("Error. %c at index %d, but %c at index %d does not match for closing.\n", check.val, check.index, str.charAt(i), i);
             return false;
-          } else if(check == '[' && str.charAt(i)!= ']'){
+          } else if(check.val == '[' && str.charAt(i)!= ']'){
+            error.printf("Error. %c at index %d, but %c at index %d does not match for closing.\n", check.val, check.index, str.charAt(i), i);
             return false;
           }
         }
         else{
+          error.printf("Error. Characters in string, without any closers:   ");
+          for(int j=i; j<str.length(); j++){
+            error.printf("%c     ", str.charAt(j));
+          }
+          while(parens.isEmpty()==false){
+            Pair cerror = parens.pop();
+            error.printf("%c     ", cerror.val);
+          }
+          error.printf("\n");
           return false;
         }
       }
