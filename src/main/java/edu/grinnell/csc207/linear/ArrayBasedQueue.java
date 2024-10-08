@@ -54,6 +54,14 @@ public class ArrayBasedQueue<T> implements Queue<T> {
   // | Queue Methods |
   // +---------------+
 
+  public int findFront() {
+    return this.front % this.values.length;
+  }
+
+  public int findBack() {
+    return this.back % this.values.length;
+  }
+
   @Override
   public boolean isEmpty() {
     return this.size <= 0;
@@ -69,7 +77,7 @@ public class ArrayBasedQueue<T> implements Queue<T> {
     if (this.isFull()) {
       throw new Exception("full");
     } // this.isFull()
-    this.values[(this.back%this.values.length)] = val;
+    this.values[this.findBack()] = val;
     ++this.size;
     ++this.back;
   } // put(T)
@@ -80,13 +88,10 @@ public class ArrayBasedQueue<T> implements Queue<T> {
       throw new Exception("empty");
     } // if empty
     // Grab and clear the element at the front of the queue
-    T result = this.values[this.front];
-    if (this.front == this.values.length){
-      this.values[this.front] = null;
-      front = 0;
-    } else {
-      this.values[this.front++] = null;
-    }
+    T result = this.values[this.findFront()];
+      this.values[this.findFront()] = null;
+      this.front++;
+    
     // We're removing an element, so decrement the size
     --this.size;
     // And we're done
@@ -98,7 +103,7 @@ public class ArrayBasedQueue<T> implements Queue<T> {
     if (this.isEmpty()) {
       throw new Exception("empty");
     } // if empty
-    return this.values[this.front];
+    return this.values[this.findFront()];
   } // peek()
 
   @Override
