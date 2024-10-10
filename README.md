@@ -5,7 +5,8 @@ Authors:
 * Samuel A. Rebelsky
 * Alyssa  
 * Nicole
-*Alex Pollock
+* Alex Pollock
+* Richard Lin
 
 The latest version of the CSC-207 lab on linear structures, now with Maven.
 
