@@ -138,7 +138,6 @@ class ArrayBasedQueueIterator<T> implements Iterator<T> {
   // | Fields |
   // +--------+
   int current;
-  int end;
   ArrayBasedQueue<T> arr;
   // +--------------+----------------------------------------------------
   // | Constructors |
@@ -149,7 +148,6 @@ class ArrayBasedQueueIterator<T> implements Iterator<T> {
    */
   public ArrayBasedQueueIterator(ArrayBasedQueue<T> q) {
     arr = q;
-    end = q.back;
     current = q.front;
   } // ArrayBasedQueueIterator
 
@@ -169,11 +167,23 @@ class ArrayBasedQueueIterator<T> implements Iterator<T> {
   @Override
   public boolean hasNext() {
     
-    return (current <= end);
+    return (current <= arr.back);
   } // hasNext()
 
   @Override
   public void remove() throws UnsupportedOperationException {
-    throw new UnsupportedOperationException();
+    arr.front = current;
+
+    try {
+    arr.get();
+    for(int c = current; c < arr.values.length - 1; c++) {
+      arr.values[c] = arr.values[c + 1];
+    }
+    arr.values[arr.values.length - 1] = null;
+    } catch (Exception e) {
+
+    }
+
+    
   } // remove()
 } // ArrayBasedQueueIterator<T>
