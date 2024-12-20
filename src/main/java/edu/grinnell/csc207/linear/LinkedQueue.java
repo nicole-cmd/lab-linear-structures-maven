@@ -146,3 +146,50 @@ class LinkedQueueIterator<T> implements Iterator<T> {
     throw new UnsupportedOperationException();
   } // remove()
 } // LinkedQueueIterator<T>
+
+// class LinkedQueueIterator<T> implements Iterable<T> {
+//   /**
+//    * The next node in the iteration.
+//    */
+//    Node<T> next;
+
+//   /**
+//    * The position we are at.
+//    */
+//    int i = 0;
+
+//   // +--------------+----------------------------------------------------
+//   // | Constructors |
+//   // +--------------+
+//   /**
+//    * Create a new iterator.
+//    */
+//    public LinkedQueueIterator(LinkedQueue<T> lq) {
+//      this.next = lq.front;
+//    } // LinkedQueueIterator
+
+//     public Iterator<T> iterator() {
+//     return new Iterator<T>() {
+//       @Override 
+//       public T next() throws NoSuchElementException {
+//         if (!this.hasNext()) {
+//           throw new NoSuchElementException();
+//         } // if (hasNext())
+//         Node<T> current = LinkedQueueIterator.this.next;
+//         LinkedQueueIterator.this.next = LinkedQueueIterator.this.next.next;
+//         LinkedQueueIterator.this.i++;
+//         return current.getValue();
+//       } // next()
+
+//       @Override
+//       public boolean hasNext() {
+//         return (LinkedQueueIterator.this.next != null);
+//       } // hasNext()
+
+//       @Override
+//       public void remove() {
+//         throw new UnsupportedOperationException();
+//       } // remove()
+//     }; // new Iterator<T>
+//   } // iterator()
+//} // class LinkedQueueIterator<T>
