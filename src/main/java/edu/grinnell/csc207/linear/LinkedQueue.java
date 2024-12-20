@@ -57,9 +57,19 @@ public class LinkedQueue<T> implements Queue<T> {
 
   @Override
   public void put(T val) throws Exception {
+    if (this.isFull()) {
+      // this shouldn't happen; linked structures do not
+      // get full
+      throw new Exception("cannot add to a full structure");
+    } // if
     Node<T> newNode = new Node<T>(val, null);
+    if (this.isEmpty()) {
+      this.front = newNode;
+      this.back = this.front;
+    } else {
     this.back.next = newNode;
-    this.back = newNode;
+    this.back = this.back.next;
+    } // if/else
   } // put(T);
 
   @Override
